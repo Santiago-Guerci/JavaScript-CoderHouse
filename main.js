@@ -1,20 +1,6 @@
-var numeroA = 1;
-let numeroB = 2;
-const NUMEROB = 3;
+let año = parseInt(prompt("Introduzca su año de nacimiento: "));
+let mes = prompt("Introduzca su mes de nacimiento: ");
+let dia = prompt("Introduzca su día de nacimiento: ");
 
-let resultadoSuma = numeroA + numeroB
-console.log(resultadoSuma);
-
-var texto1 = "CODER";
-let texto2 = "HOUSE";
-const BLANCO = " ";
-
-let concatenado = texto1 + texto2
-console.log(concatenado);
-
-let numero1 = parseInt(prompt("Ingrese un número: "));
-let numero2 = parseInt(prompt("Ingrese otro número: "));
-
-let resultado = numero1 + numero2;
-
-alert("El resultado es: " + resultado);
+let calculoEdad = 2021 - año ;
+alert("Usted nació el " + dia + " de " + mes + ", y tiene " + calculoEdad + " años.");
