@@ -1,14 +1,16 @@
-// let año = parseInt(prompt("Introduzca su año de nacimiento: "));
-// let mes = prompt("Introduzca su mes de nacimiento: ");
-// let dia = prompt("Introduzca su día de nacimiento: ");
+//Imprimir una rampa de x filas según lo ingresado.
 
-// let calculoEdad = 2021 - año ;
-// alert("Usted nació el " + dia + " de " + mes + ", y tiene " + calculoEdad + " años.");
+//Mientras no sea un número entre el 1 y el 10, voy a seguir pidiendo que lo ingrese.
+let num;
 
-let numeroIngresado = parseInt(prompt("Ingrese un número y le diré si es par o impar: "));
+do {
+    num = parseInt(prompt("Ingrese un número del 1 al 10: "));
+} while (num<1 || num>10);
 
-if (numeroIngresado % 2 != 0) {
-    alert("El numero " + numeroIngresado + " es impar.");
-} else {
-    alert("El numero " + numeroIngresado + " es par.");
+for (let i = 0; i < num; i++) 
+{
+    console.log("#".repeat(i+1));
 }
+
+//Encontre la forma de escribir múltiples caracteres uno al lado del otro en consola usando el .repeat()
+//Ya que sino me aparecía el caracter "#" y el num de la cantidad de veces que había sido impreso.
