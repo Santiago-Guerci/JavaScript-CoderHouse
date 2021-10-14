@@ -1,24 +1,23 @@
-// Ingreso de monto en dólares
+// Calculadora de impuestos en dólares
+// Declaración de variables
 
 let dolares = parseInt(prompt("Ingrese el monto de su compra en dólares: "));
-let cambio = parseInt(prompt("¿A qué valor le realizan el cambio?"));
+let cambio = parseInt(prompt("¿A qué valor está el dolar oficial hoy?"));
 let valor;
 let impuestoPais;
 let impuestoGan;
 let final;
 let total;
 
-let ganancias = confirm("¿Usted paga Impuesto a las Ganancias o Bienes Personales?");
-let moneda = prompt("¿Pagará en dólares o en pesos?");
-
+// Funciones que realizan los cálculos
 function calcularImpuestos (monto) {
-    valor = dolares * cambio;
+    valor = monto * cambio;
     impuestoPais = valor * 0.30;
     impuestoGan = valor * 0.35;
     total = valor + impuestoGan + impuestoPais;
 }
 
-function metodoPago (metodo) {
+function pagarCon (metodo) {
 
     if (metodo == "dolares") {
         final = valor + impuestoGan;
@@ -29,24 +28,56 @@ function metodoPago (metodo) {
     }
 }
 
-calcularImpuestos (dolares);
-metodoPago (moneda);
+function convertirMoneda() {
+    valor /= cambio;
+    impuestoPais /= cambio;
+    impuestoGan /= cambio;
+    total /= cambio;
+    final /= cambio;
+}
 
-if (ganancias) {
-    alert("Su monto en dolares es: USD" + dolares + 
-    "\nEl valor al cambio ingresado: $" + valor +
-    "\nImpuesto País: $" + impuestoPais + 
-    "\nImpuesto a las Ganancias: $" + impuestoGan + 
-    "\nTotal: $" + total +
-    "\nAl abonar en "+ moneda + ": $" + final + 
-    "\nUsted puede devolver el 35% de Ganancias ingresando en AFIP");
+// Llamado a la función
+calcularImpuestos (dolares);
+alert("El monto total a pagar es: $"+total);
+
+let detalle = confirm ("¿Quiere saber el detalle?")
+
+if (detalle) {
     
+    let ganancias = confirm("¿Usted paga Impuesto a las Ganancias o Bienes Personales?");
+    let moneda = prompt("¿Pagará en dólares o en pesos?");
+    pagarCon (moneda);
+
+    if (moneda == "dolares") {
+        convertirMoneda();
+        if (ganancias) {
+            alert("El monto de la compra es: $"+valor+ " USD" +
+            "\nEl Impuesto PAIS es: $"+impuestoPais+" USD"+
+            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+" USD"+
+            "\nEl total es: $"+total+" USD"+
+            "\nEl monto final a pagar es: $"+final+" USD, pero puede solicitar la devolución de ganancias en AFIP")
+        } else {
+            alert("El monto de la compra es: $"+valor+ " USD" +
+            "\nEl Impuesto PAIS es: $"+impuestoPais+" USD"+
+            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+" USD"+
+            "\nEl total es: $"+total+" USD"+
+            "\nEl monto final a pagar es: $"+final+" USD")
+        }  
+    } else {
+        if (ganancias) {
+            alert("El monto de la compra es: $"+valor+ 
+            "\nEl Impuesto PAIS es: $"+impuestoPais+
+            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+
+            "\nEl total es: $"+total+
+            "\nEl monto final a pagar es: $"+final+", pero puede solicitar la devolución de ganancias en AFIP")
+        } else {
+            alert("El monto de la compra es: $"+valor+
+            "\nEl Impuesto PAIS es: $"+impuestoPais+
+            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+
+            "\nEl total es: $"+total+
+            "\nEl monto final a pagar es: $"+final)
+        }
+    }
 } else {
-    alert("Su monto en dolares es: USD" + dolares + 
-    "\nEl valor al cambio ingresado: $" + valor +
-    "\nImpuesto País: $" + impuestoPais + 
-    "\nImpuesto a las Ganancias: $" + impuestoGan + 
-    "\nTotal: $" + total +
-    "\nAl abonar en "+ moneda + ": $" + final + 
-    "\nUsted NO puede devolver el 35% de Ganancias ingresando en AFIP");
+    alert("Gracias por utilizar nuestro servicio");
 }
