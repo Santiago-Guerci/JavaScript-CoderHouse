@@ -1,83 +1,91 @@
-// Calculadora de impuestos en dólares
-// Declaración de variables
+//Adapto el código a mi idea de proyecto final (el mismo de desarrollo web)
+//Una tienda de panadería y pastelería
 
-let dolares = parseInt(prompt("Ingrese el monto de su compra en dólares: "));
-let cambio = parseInt(prompt("¿A qué valor está el dolar oficial hoy?"));
-let valor;
-let impuestoPais;
-let impuestoGan;
-let final;
-let total;
+let producto = 0;
+let cantidadProducto = 0;
+let precio = 0;
 
-// Funciones que realizan los cálculos
-function calcularImpuestos (monto) {
-    valor = monto * cambio;
-    impuestoPais = valor * 0.30;
-    impuestoGan = valor * 0.35;
-    total = valor + impuestoGan + impuestoPais;
-}
-
-function pagarCon (metodo) {
-
-    if (metodo == "dolares") {
-        final = valor + impuestoGan;
-    } else if (metodo == "pesos") {
-        final = valor + impuestoGan + impuestoPais;
-    } else {
-        alert("Debe ingresar 'dolares' o 'pesos'");
+class Pedido {
+    constructor(producto, precio, cantidad){
+        this.producto = producto,
+        this.precio = precio,
+        this.cantidad = cantidad,
+        this.envio = 0,
+        this.subTotal = 0,
+        this.total = 0
     }
-}
 
-function convertirMoneda() {
-    valor /= cambio;
-    impuestoPais /= cambio;
-    impuestoGan /= cambio;
-    total /= cambio;
-    final /= cambio;
-}
+    calcularSubTotal() {
+        this.subTotal = this.precio * this.cantidad;
+    }
 
-// Llamado a la función
-calcularImpuestos (dolares);
-alert("El monto total a pagar es: $"+total);
+    calcularIva() {
+        return this.subTotal * 0.21;
+    }
 
-let detalle = confirm ("¿Quiere saber el detalle?")
-
-if (detalle) {
-    
-    let ganancias = confirm("¿Usted paga Impuesto a las Ganancias o Bienes Personales?");
-    let moneda = prompt("¿Pagará en dólares o en pesos?");
-    pagarCon (moneda);
-
-    if (moneda == "dolares") {
-        convertirMoneda();
-        if (ganancias) {
-            alert("El monto de la compra es: $"+valor+ " USD" +
-            "\nEl Impuesto PAIS es: $"+impuestoPais+" USD"+
-            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+" USD"+
-            "\nEl total es: $"+total+" USD"+
-            "\nEl monto final a pagar es: $"+final+" USD, pero puede solicitar la devolución de ganancias en AFIP")
+    calcularEnvio() {
+        if(this.subTotal >= 4000) {
+            this.envio = 0;
         } else {
-            alert("El monto de la compra es: $"+valor+ " USD" +
-            "\nEl Impuesto PAIS es: $"+impuestoPais+" USD"+
-            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+" USD"+
-            "\nEl total es: $"+total+" USD"+
-            "\nEl monto final a pagar es: $"+final+" USD")
-        }  
-    } else {
-        if (ganancias) {
-            alert("El monto de la compra es: $"+valor+ 
-            "\nEl Impuesto PAIS es: $"+impuestoPais+
-            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+
-            "\nEl total es: $"+total+
-            "\nEl monto final a pagar es: $"+final+", pero puede solicitar la devolución de ganancias en AFIP")
-        } else {
-            alert("El monto de la compra es: $"+valor+
-            "\nEl Impuesto PAIS es: $"+impuestoPais+
-            "\nEl Impuesto a las Ganancias es: $"+impuestoGan+
-            "\nEl total es: $"+total+
-            "\nEl monto final a pagar es: $"+final)
+            this.envio = 500;
         }
     }
-} else {
-    alert("Gracias por utilizar nuestro servicio");
+
+    calcularTotal() {
+        this.total = this.subTotal + this.envio + this.calcularIva();
+    }
 }
+
+
+function pedidoProducto() {
+    while(!producto || producto == 0 || producto > 5) {
+        producto = parseInt(prompt("¿Qué producto desea comprar?:\n 1: Box Desayunos($1300)\n 2: Box Surtidos($1800)\n 3: Box Vinos($2200)\n 4: Box Minitortas($2000)\n 5: Box Panadería($1500)"));
+    }
+
+    switch(producto){
+        case 1:
+            producto = "Box Desayunos";
+            precio = 1300;
+            break;
+        case 2:
+            producto = "Box Surtidos";
+            precio = 1800;
+            break;
+        case 3:
+            producto = "Box Vinos";
+            precio = 2200;
+            break;
+        case 4:
+            producto = "Box Minitortas";
+            precio = 2000;
+            break;
+        case 5:
+            producto = "Box Panadería";
+            precio = 1500;
+            break;
+    }
+
+    while(!cantidadProducto || cantidadProducto == 0){
+        cantidadProducto = parseInt(prompt("Producto elegido: "+ producto + "\n ¿Cuántos desea comprar? Introduzca un número."));
+    }
+
+    return new Pedido(producto, precio, cantidadProducto)
+}
+
+alert("AxelCocina - Panadería y Pastelería");
+
+const pedido = pedidoProducto();
+
+pedido.calcularSubTotal();
+pedido.calcularIva();
+pedido.calcularEnvio();
+pedido.calcularTotal();
+
+alert("Detalle del pedido:\n"+
+    "- " + pedido.producto + " x " + pedido.cantidad + ": $" + pedido.precio * pedido.cantidad +"\n" +
+    "- IVA 21%: $" + pedido.calcularIva() + "\n" +
+    "- Costo de envío: $" + pedido.envio + "\n" +
+    "Total = $" + pedido.total
+);
+
+alert("Próximamente se abrirá la posibilidad de armar su propia caja personalizada, así como poder incluir varios productos distintos en el carrito.");
