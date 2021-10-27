@@ -1,91 +1,23 @@
-//Adapto el código a mi idea de proyecto final (el mismo de desarrollo web)
-//Una tienda de panadería y pastelería
+//Voy a utilizar esta copia de mi proyecto final para realizar el resto de los ejercicios. Ahora entrego el ejercicio de DOM
+// Eliminé todo el simulador de la primer entrega del proyecto, total lo tengo en otro repositorio
 
-let producto = 0;
-let cantidadProducto = 0;
-let precio = 0;
+let nombre = prompt("Ingrese su nombre");
+let titulo = document.getElementById("titulo");
+let seccionDOM = document.getElementById("seccionDOM");
 
-class Pedido {
-    constructor(producto, precio, cantidad){
-        this.producto = producto,
-        this.precio = precio,
-        this.cantidad = cantidad,
-        this.envio = 0,
-        this.subTotal = 0,
-        this.total = 0
-    }
+titulo.textContent = `Bienvenido ${nombre}, AxelCocina lo saluda`;
 
-    calcularSubTotal() {
-        this.subTotal = this.precio * this.cantidad;
-    }
+//ahora quiero agregar el mismo párrafo que está debajo del h1, pero con DOM en vez del html. class="parrafoHistoria"
 
-    calcularIva() {
-        return this.subTotal * 0.21;
-    }
+let parrafo = document.createElement('p');
+parrafo.innerHTML = `Mi nombre es <strong>Axel</strong>, chef, pastelero e hincha de river. <strong>Cocinar</strong> es lo que más me gusta y es por eso que me dedico a esto.
+                    Empecé en la casa de mis padres, con una cocina muy chica. Ahí miraba mucho cómo cocinaba mi vieja, y la ayudaba cuando podía.
+                    Despues me profesionalicé estudiando en el IAG y me recibí de Cocinero Profesional, y ahí fue cuando mis viejos me regalaron 
+                    un freezer aparte para poder comenzar con este emprendimiento.`
 
-    calcularEnvio() {
-        if(this.subTotal >= 4000) {
-            this.envio = 0;
-        } else {
-            this.envio = 500;
-        }
-    }
-
-    calcularTotal() {
-        this.total = this.subTotal + this.envio + this.calcularIva();
-    }
+function agregarParrafoConClase() {
+    parrafo.classList.add("parrafoHistoria");
+    seccionDOM.appendChild(parrafo);
 }
 
-
-function pedidoProducto() {
-    while(!producto || producto == 0 || producto > 5) {
-        producto = parseInt(prompt("¿Qué producto desea comprar?:\n 1: Box Desayunos($1300)\n 2: Box Surtidos($1800)\n 3: Box Vinos($2200)\n 4: Box Minitortas($2000)\n 5: Box Panadería($1500)"));
-    }
-
-    switch(producto){
-        case 1:
-            producto = "Box Desayunos";
-            precio = 1300;
-            break;
-        case 2:
-            producto = "Box Surtidos";
-            precio = 1800;
-            break;
-        case 3:
-            producto = "Box Vinos";
-            precio = 2200;
-            break;
-        case 4:
-            producto = "Box Minitortas";
-            precio = 2000;
-            break;
-        case 5:
-            producto = "Box Panadería";
-            precio = 1500;
-            break;
-    }
-
-    while(!cantidadProducto || cantidadProducto == 0){
-        cantidadProducto = parseInt(prompt("Producto elegido: "+ producto + "\n ¿Cuántos desea comprar? Introduzca un número."));
-    }
-
-    return new Pedido(producto, precio, cantidadProducto)
-}
-
-alert("AxelCocina - Panadería y Pastelería");
-
-const pedido = pedidoProducto();
-
-pedido.calcularSubTotal();
-pedido.calcularIva();
-pedido.calcularEnvio();
-pedido.calcularTotal();
-
-alert("Detalle del pedido:\n"+
-    "- " + pedido.producto + " x " + pedido.cantidad + ": $" + pedido.precio * pedido.cantidad +"\n" +
-    "- IVA 21%: $" + pedido.calcularIva() + "\n" +
-    "- Costo de envío: $" + pedido.envio + "\n" +
-    "Total = $" + pedido.total
-);
-
-alert("Próximamente se abrirá la posibilidad de armar su propia caja personalizada, así como poder incluir varios productos distintos en el carrito.");
+agregarParrafoConClase();
