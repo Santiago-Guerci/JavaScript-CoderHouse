@@ -1,0 +1,20 @@
+#Carrito {
+    background-color: map-get($colores, primarioBg);
+    margin: 5% auto;
+    border-top: 2px solid blanchedalmond;
+    border-bottom: 2px solid blanchedalmond;
+    text-align: center;
+}
+
+.cartas {
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card {
+    background-color: map-get($colores, carouselBg);
+}
+
+.card-title {
+    color: white;
+}
